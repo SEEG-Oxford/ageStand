@@ -2,40 +2,39 @@
 \alias{ageStand-package}
 \alias{ageStand}
 \docType{package}
+
 \title{
-What the package does (short line)
-~~ package title ~~
+Age standardisation of malaria prevalence
 }
+
 \description{
-More about what it does (maybe more than one line)
-~~ A concise (1-5 lines) description of the package ~~
+Functions to convert malaria parasite rate estimates between age ranges.
+At present this package has only one function \code{\link{convertPrevalence}} which uses the modified Pull and Grab model introduced in Smith \emph{et al.} (2007) to convert prevalence estimates for \emph{Plasmodium falciparum} and \emph{P. vivax}.
 }
+
 \details{
 \tabular{ll}{
 Package: \tab ageStand\cr
 Type: \tab Package\cr
 Version: \tab 1.0\cr
 Date: \tab 2014-06-10\cr
-License: \tab What license is it under?\cr
+License: \tab GPL (>=2)\cr
 }
-~~ An overview of how to use the package, including the most important functions ~~
+See the helpfile for \code{\link{convertPrevalence}} for details of how to use the currently implemented models
 }
-\author{
-Who wrote it
 
-Maintainer: Who to complain to <yourfault@somewhere.net>
-~~ The author and/or maintainer of the package ~~
+\author{
+David L. Smith (derived and parameterised the models and wrote the original code)
+Nick Golding (restructured the code and wrote the R package)
+
+Maintainer: Nick Golding <nick.golding@zoo.ox.ac.uk>
 }
+
 \references{
-~~ Literature or other references for background information ~~
+Smith, D. L. \emph{et al.} Standardizing estimates of the Plasmodium falciparum parasite rate. \emph{Malar. J.} 6, 131 (2007).
 }
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R ~~
-~~ documentation directory ~~
-\keyword{ package }
+
 \seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
+\code{\link{convertPrevalence}}
 }
-\examples{
-~~ simple examples of the most important functions ~~
-}
+

@@ -1,137 +1,101 @@
 \name{convertPrevalence}
 \alias{convertPrevalence}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
-%%  ~~function to do ... ~~
+Convert parasite rate estimates between age categories.
 }
+
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Given a malaria parasite rate for a specific age category, used the modified Pull and Grab model introduced by Smith \emph{et al.} (2007) to estimate the parasite rate for any other age category. 
 }
+
 \usage{
-convertPrevalence(prevalence, age_min_in, age_max_in, age_min_out = rep(2, length(prevalence)), age_max_out = rep(9, length(prevalence)), parameters = "Pf_Smith2007", sample_weights = NULL)
+convertPrevalence(prevalence,
+                  age_min_in,
+                  age_max_in,
+                  age_min_out = rep(2, length(prevalence)),
+                  age_max_out = rep(9, length(prevalence)),
+                  parameters = "Pf_Smith2007",
+                  sample_weights = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{prevalence}{
-%%     ~~Describe \code{prevalence} here~~
+  A vector giving the malaria prevalence (parasite rate) estimates to convert from.
 }
   \item{age_min_in}{
-%%     ~~Describe \code{age_min_in} here~~
+  A vector giving the (exclusive) lower bound on the age range associated with the prevalence estimates given in \emph{prevalence}.
 }
   \item{age_max_in}{
-%%     ~~Describe \code{age_max_in} here~~
+  A vector giving the (inclusive) upper bound on the age range associated with the prevalence estimates given in \emph{prevalence}.
 }
   \item{age_min_out}{
-%%     ~~Describe \code{age_min_out} here~~
+  A vector giving the (exclusive) lower bound on the age range for which the resulting prevalence estimate is to be calculated. Defaults to 2 for all elements of \emph{prevalence}, i.e. ages *above* 2.
 }
   \item{age_max_out}{
-%%     ~~Describe \code{age_max_out} here~~
+  A vector giving the (inclusive) upper bound on the age range for which the resulting prevalence estimate is to be calculated. Defaults to 9 for all elements of \emph{prevalence}, i.e. ages 9 and below.
 }
   \item{parameters}{
-%%     ~~Describe \code{parameters} here~~
+  The set of parameters to use in the model. This can either be "Pf_Smith2007" to use the parameters for \emph{Plasmodium falciparum} defined in Smith \emph{et al.} (2007), "Pv_Gething2012" for the \emph{P. vivax} parameters used in Gething \emph{et al.} (2012), or a user-specified vector givng the values of parameters $b$, $s$, $c$ and $\alpha$, in that order.
 }
   \item{sample_weights}{
-%%     ~~Describe \code{sample_weights} here~~
+  If specified, `sample_weights` must be a vector of length 85 giving the age distribution of the population (i.e. the proportion of the population with age falling within 85 1-year bins: 0-1, 1-2, ..., 83-84, 84-85+). If \code{sample_weights = NULL}, the average age distribution form the studies used in Smith {et al.} (2007) are used.
 }
 }
+
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+The vectors \code{prevalence}, \code{age_min_in}, \code{age_max_in}, \code{age_min_out} and \code{age_max_out} must all have the same length.
+
+See Smith \emph{et al.} (2007) for details of the model used.
 }
+
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+  A vector of the same length as \code{prevalence} with each element giving the parasite rate estimates for the age range bounded by the corresponding elements of \code{age_min_out} and \code{age_max_out}.
 }
+
 \references{
-%% ~put references to the literature/web site here ~
+Smith, D. L. \emph{et al.} Standardizing estimates of the Plasmodium falciparum parasite rate. \emph{Malar. J.} 6, 131 (2007).
+Gething, P. W. \emph{et al.} A long neglected world malaria map: \emph{Plasmodium vivax} endemicity in 2010. \emph{PLoS Negl. Trop. Dis.} 6, e1814 (2012).
 }
+
 \author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
+David L. Smith and Nick Golding
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+# convert a 2-10 PfPR of 0.1 to all-ages prevalence using the
+# parameters for PfPR from Smith *et al.* (2007) - the default.
+convertPrevalence(prevalence = 0.1,
+                  age_min_in = 2,
+                  age_max_in = 9,
+                  age_min_out = 0,
+                  age_max_out = 85)
 
-## The function is currently defined as
-function (prevalence, age_min_in, age_max_in, age_min_out = rep(2, 
-    length(prevalence)), age_max_out = rep(9, length(prevalence)), 
-    parameters = "Pf_Smith2007", sample_weights = NULL) 
-{
-    if (class(parameters) == "character" && length(parameters == 
-        1) && parameters \%in\% c("Pf_Smith2007", "Pv_Gething2012")) {
-        parameters <- switch(parameters, Pf_Smith2007 = c(b = 1.807675, 
-            s = 0.446326, c = 0.070376, alpha = 9.422033), Pv_Gething2012 = c(b = 0.947, 
-            s = 0.773, c = 0.208, alpha = 6.66))
-    }
-    else if (class(parameters) != "numeric" || length(parameters) != 
-        4) {
-        stop("The argument \"parameters\" must be one of either \"Pf_Smith2007\",\n\"Pv_Gething2012\" or a numeric vector of length 4 giving the values of parameters\nb, s, c and alpha (in that order!)")
-    }
-    if (is.null(sample_weights)) {
-        sample_weights <- c(0.03916203, 0.04464933, 0.0464907, 
-            0.04703639, 0.04468962, 0.04430289, 0.04088593, 0.04048751, 
-            0.0385978, 0.03586601, 0.03665516, 0.02850493, 0.03038655, 
-            0.02493861, 0.02169105, 0.0150684, 0.01481482, 0.01519726, 
-            0.01474023, 0.01553814, 0.01193805, 0.01220409, 0.01202119, 
-            0.01202534, 0.01283806, 0.01083728, 0.01095784, 0.01092874, 
-            0.01067932, 0.01137331, 0.01035001, 0.01035001, 0.01035001, 
-            0.01035001, 0.01035001, 0.008342426, 0.008342426, 
-            0.008342426, 0.008342426, 0.008342426, 0.00660059, 
-            0.00660059, 0.00660059, 0.00660059, 0.00660059, 0.004597861, 
-            0.004597861, 0.004597861, 0.004597861, 0.004597861, 
-            0.003960774, 0.003960774, 0.003960774, 0.003960774, 
-            0.003960774, 0.003045687, 0.003045687, 0.003045687, 
-            0.003045687, 0.003045687, 0.002761077, 0.002761077, 
-            0.002761077, 0.002761077, 0.002761077, 0.001275367, 
-            0.001275367, 0.001275367, 0.001275367, 0.001275367, 
-            0.001275367, 0.001275367, 0.001275367, 0.001275367, 
-            0.001275367, 0.001275367, 0.001275367, 0.001275367, 
-            0.001275367, 0.001275367, 0.001275367, 0.001275367, 
-            0.001275367, 0.001275367, 0.001275367)
-    }
-    N <- length(prevalence)
-    stopifnot(length(age_min_in) == length(prevalence))
-    stopifnot(length(age_max_in) == length(prevalence))
-    stopifnot(length(age_min_out) == length(prevalence))
-    stopifnot(length(age_max_out) == length(prevalence))
-    age_min_in <- pmin(age_min_in, 85)
-    age_max_in <- pmin(age_max_in, 85)
-    age_min_out <- pmin(age_min_out, 85)
-    age_max_out <- pmin(age_max_out, 85)
-    stopifnot(age_min_out >= 0)
-    stopifnot(age_max_out >= 0)
-    stopifnot(age_min_out < age_max_out)
-    if (N > 1) {
-        ans <- vector(mode = "numeric", length = N)
-        for (i in 1:N) {
-            ans[i] <- convertPrevalence(prevalence = prevalence[i], 
-                age_min_in = age_min_in[i], age_max_in = age_max_in[i], 
-                age_min_out = age_min_out[i], age_max_out = age_max_out[i], 
-                parameters = parameters, sample_weights = sample_weights)
-        }
-        return(ans)
-    }
-    P_prime <- invertPF(prevalence = prevalence, age_min = age_min_in, 
-        age_max = age_max_in, sample_weights = sample_weights, 
-        parameters = parameters)
-    ans <- PFw(P_prime, age_min = age_min_out, age_max = age_max_out, 
-        sample_weights = sample_weights, parameters = parameters)
-    return(ans)
-  }
+# convert a 2-10 *PvPR* of 0.3 to 60-85 prevalence using the
+# parameters for PvPR from Gething *et al.* (2012)
+convertPrevalence(prevalence = 0.3,
+                  age_min_in = 2,
+                  age_max_in = 9,
+                  age_min_out = 60,
+                  age_max_out = 85,
+                  parameters = "Pv_Gething2012")
+
+# The same again, but using a user-specified set of parameters
+convertPrevalence(prevalence = 0.3,
+                  age_min_in = 2,
+                  age_max_in = 9,
+                  age_min_out = 60,
+                  age_max_out = 85,
+                  parameters = c(b = 1.2,
+                                 s = 0.8,
+                                 c = 0.1,
+                                 alpha = 5.1))
+
+# The function is vectorized, so convert a whole load of PvPRs with different
+# age ranges to 2-10 PvPR (the default) using the Gething *et al.* (2013)
+# parameters
+convertPrevalence(prevalence = (1:5) / 10,
+                  age_min_in = 1:5,
+                  age_max_in = (1:5) * 10,
+                  parameters = "Pv_Gething2012")
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
