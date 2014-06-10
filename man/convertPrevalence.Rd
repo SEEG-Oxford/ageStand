@@ -36,10 +36,10 @@ convertPrevalence(prevalence,
   A vector giving the (inclusive) upper bound on the age range for which the resulting prevalence estimate is to be calculated. Defaults to 9 for all elements of \emph{prevalence}, i.e. ages 9 and below.
 }
   \item{parameters}{
-  The set of parameters to use in the model. This can either be "Pf_Smith2007" to use the parameters for \emph{Plasmodium falciparum} defined in Smith \emph{et al.} (2007), "Pv_Gething2012" for the \emph{P. vivax} parameters used in Gething \emph{et al.} (2012), or a user-specified vector givng the values of parameters $b$, $s$, $c$ and $\alpha$, in that order.
+  The set of parameters to use in the model. This can either be "Pf_Smith2007" to use the parameters for \emph{Plasmodium falciparum} defined in Smith \emph{et al.} (2007), "Pv_Gething2012" for the \emph{P. vivax} parameters used in Gething \emph{et al.} (2012), or a user-specified vector givng the values of parameters \eqn{b}, \eqn{s}, \eqn{c} and \eqn{\alpha}, in that order.
 }
   \item{sample_weights}{
-  If specified, `sample_weights` must be a vector of length 85 giving the age distribution of the population (i.e. the proportion of the population with age falling within 85 1-year bins: 0-1, 1-2, ..., 83-84, 84-85+). If \code{sample_weights = NULL}, the average age distribution form the studies used in Smith {et al.} (2007) are used.
+  If specified, `sample_weights` must be a vector of length 85 giving the age distribution of the population (i.e. the proportion of the population with age falling within 85 1-year bins: 0-1, 1-2, ..., 83-84, 84-85+). If \code{sample_weights = NULL} the average age distribution given in the studies used in Smith {et al.} (2007) are used.
 }
 }
 
@@ -55,6 +55,7 @@ See Smith \emph{et al.} (2007) for details of the model used.
 
 \references{
 Smith, D. L. \emph{et al.} Standardizing estimates of the Plasmodium falciparum parasite rate. \emph{Malar. J.} 6, 131 (2007).
+
 Gething, P. W. \emph{et al.} A long neglected world malaria map: \emph{Plasmodium vivax} endemicity in 2010. \emph{PLoS Negl. Trop. Dis.} 6, e1814 (2012).
 }
 
