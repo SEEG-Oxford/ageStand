@@ -28,4 +28,4 @@ Please feel free to file bugs and issues you've had with the package using the G
 If you'd like to improve the package please feel free to fork the repo and send us a pull request so that we can add it to this package.
 
 ### Reference
-[Smith, D. L. *et al.* Standardizing estimates of the Plasmodium falciparum parasite rate. \emph{Malaria Journal} 6, 131 (2007).](http://www.malariajournal.com/content/6/1/131)
+[Smith, D. L. *et al.* Standardizing estimates of the Plasmodium falciparum parasite rate. *Malaria Journal* 6, 131 (2007).](http://www.malariajournal.com/content/6/1/131)
