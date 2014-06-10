@@ -1,9 +1,9 @@
 Package: ageStand
 Type: Package
-Title: Age standardisation of malaria prevalencel
+Title: Age standardisation of malaria prevalence
 Version: 1.0
 Date: 2014-06-10
 Author: David L. Smith and Nick Golding
 Maintainer: Nick Golding <nick.golding@zoo.ox.ac.uk>
-Description: Converts parasite rate estimates for \emph{Plasmodium falciparum} and \emph{P. vivax} between age ranges using the modified Pull and Grab model introduced in Smith \emph{et al.} (2007).
+Description: Converts malaria parasite rate estimates between age ranges using parameterised mathematical models.
 License: GPL (>= 2)
