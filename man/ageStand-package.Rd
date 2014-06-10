@@ -24,7 +24,7 @@ See the helpfile for \code{\link{convertPrevalence}} for details of how to use t
 }
 
 \author{
-David L. Smith (derived and parameterised the models and wrote the original code)
+David L. Smith (derived and parameterised the models and wrote the original code)\cr
 Nick Golding (restructured the code and wrote the R package)
 
 Maintainer: Nick Golding <nick.golding@zoo.ox.ac.uk>
