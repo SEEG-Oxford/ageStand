@@ -7,7 +7,7 @@ ageStand
 
 To install ageStand you can use the ```install_github``` function in the [```devtools```](http://cran.r-project.org/web/packages/devtools/index.html) package, like this:
 
-```rout
+```rconsole
 # install devtools if you haven't already
 install.packages('devtools')
 
@@ -25,7 +25,7 @@ library(ageStand)
 
 The package currently contains one function, ```convertPrevalence```, which simplifies conversion of prevalence estimates between age bounds. The following code converts a *P. falciparum* prevalence estimate for the 2-10 age range to an all-ages prevalence estimate.
 
-```rout
+```rconsole
 convertPrevalence(prevalence = 0.1,
                   age_min_in = 2,
                   age_max_in = 9,
