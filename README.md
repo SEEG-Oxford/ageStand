@@ -3,7 +3,7 @@ ageStand
 
 **ageStand** is an R package containing functions to convert malaria parasite rate estimates between age ranges. At present this package has only one exported function ```convertPrevalence``` which uses the modified Pull and Grab model introduced in Smith *et al.* (2007) to convert prevalence estimates for *Plasmodium falciparum* and *P. vivax*.
 
-### installing ageStand
+### Installing ageStand
 
 To install ageStand you can use the ```install_github``` function in the [```devtools```](http://cran.r-project.org/web/packages/devtools/index.html) package, like this:
 
@@ -20,6 +20,20 @@ install_github('ageStand', 'SEEG-Oxford')
 # and load it
 library(ageStand)
 ```
+
+### Using ageStand
+
+The package currently contains one function, ```convertPrevalence```, which simplifies conversion of prevalence estimates between age bounds. The following code converts a *P. falciparum* prevalence estimate for the 2-10 age range to an all-ages prevalence estimate.
+
+```{r}
+convertPrevalence(prevalence = 0.1,
+                  age_min_in = 2,
+                  age_max_in = 9,
+                  age_min_out = 0,
+                  age_max_out = 85)
+```
+
+This functions can also be vecotrised and applied to *P. vivax*. For full details see the helpfile for this function by typing ```?convertPrevalence``` (after installing and loading the package) in R.
 
 ### Getting in touch
 
