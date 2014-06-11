@@ -1,13 +1,13 @@
 ageStand
 ========
 
-**ageStand** is an R package containing functions to convert malaria parasite rate estimates between age ranges. At present this package has only one exported function ```r convertPrevalence``` which uses the modified Pull and Grab model introduced in Smith *et al.* (2007) to convert prevalence estimates for *Plasmodium falciparum* and *P. vivax*.
+**ageStand** is an R package containing functions to convert malaria parasite rate estimates between age ranges. At present this package has only one exported function ```R convertPrevalence``` which uses the modified Pull and Grab model introduced in Smith *et al.* (2007) to convert prevalence estimates for *Plasmodium falciparum* and *P. vivax*.
 
 ### Installing ageStand
 
-To install ageStand you can use the ```r install_github``` function in the [```devtools```](http://cran.r-project.org/web/packages/devtools/index.html) package, like this:
+To install ageStand you can use the ```R install_github``` function in the [```devtools```](http://cran.r-project.org/web/packages/devtools/index.html) package, like this:
 
-```r
+```R
 # install devtools if you haven't already
 install.packages('devtools')
 
@@ -23,9 +23,9 @@ library(ageStand)
 
 ### Using ageStand
 
-The package currently contains one function, ```r convertPrevalence```, which simplifies conversion of prevalence estimates between age bounds. The following code converts a *P. falciparum* prevalence estimate for the 2-10 age range to an all-ages prevalence estimate.
+The package currently contains one function, ```R convertPrevalence```, which simplifies conversion of prevalence estimates between age bounds. The following code converts a *P. falciparum* prevalence estimate for the 2-10 age range to an all-ages prevalence estimate.
 
-```r
+```R
 convertPrevalence(prevalence = 0.1,
                   age_min_in = 2,
                   age_max_in = 9,
@@ -33,7 +33,7 @@ convertPrevalence(prevalence = 0.1,
                   age_max_out = 85)
 ```
 
-This functions can also be vecotrised and applied to *P. vivax*. For full details see the helpfile for this function by typing ```r ?convertPrevalence``` (after installing and loading the package) in R.
+This functions can also be vecotrised and applied to *P. vivax*. For full details see the helpfile for this function by typing ```R ?convertPrevalence``` (after installing and loading the package) in R.
 
 ### Getting in touch
 
