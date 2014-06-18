@@ -46,6 +46,8 @@ convertPrevalence(prevalence,
 \details{
 The vectors \code{prevalence}, \code{age_min_in}, \code{age_max_in}, \code{age_min_out} and \code{age_max_out} must all have the same length.
 
+If any element of these vectors is \code{NA}, the corresponding output is also \code{NA} and a warning is issued.
+
 See Smith \emph{et al.} (2007) for details of the model used.
 }
 
@@ -98,5 +100,17 @@ convertPrevalence(prevalence = 0.3,
 convertPrevalence(prevalence = (1:5) / 10,
                   age_min_in = 1:5,
                   age_max_in = (1:5) * 10,
+                  parameters = "Pv_Gething2012")
+                  
+# If any of the vectors are NA, an NA is returned for that element and a warning is issued
+convertPrevalence(prevalence = c(0.1, NA, 0.3),
+                  age_min_in = c(1, 2, NA),
+                  age_max_in = (1:3) * 10,
+                  parameters = "Pv_Gething2012")
+                  
+# Same for a single record
+convertPrevalence(prevalence = 0.1,
+                  age_min_in = NA,
+                  age_max_in = 10,
                   parameters = "Pv_Gething2012")
 }

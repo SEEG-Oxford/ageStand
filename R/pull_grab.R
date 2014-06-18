@@ -186,15 +186,15 @@ convertPrevalence <- function (prevalence,
     
     # otherwise check it's a length 4 numeric, user-specified set of parameters
   } else if (class(parameters) != 'numeric' ||
-              length(parameters) != 4) {
+               length(parameters) != 4) {
     
     # and throw an error if not
     stop('The argument "parameters" must be one of either "Pf_Smith2007",\
-"Pv_Gething2012" or a numeric vector of length 4 giving the values of parameters\
-b, s, c and alpha (in that order!)')
+         "Pv_Gething2012" or a numeric vector of length 4 giving the values of parameters\
+         b, s, c and alpha (in that order!)')
     
   }
-    
+  
   # if sample weights aren't specified, use Dave's
   if (is.null(sample_weights)) {
     
@@ -254,35 +254,73 @@ b, s, c and alpha (in that order!)')
     
     # loop through them
     for (i in 1:N) {
-      ans[i] <- convertPrevalence(prevalence = prevalence[i],
-                                  age_min_in = age_min_in[i],
-                                  age_max_in = age_max_in[i],
-                                  age_min_out = age_min_out[i],
-                                  age_max_out = age_max_out[i],
-                                  parameters = parameters,
-                                  sample_weights = sample_weights)
+      
+      # suppress warnigns so you don't get one for every missing datapoint
+      ans[i] <- suppressWarnings(convertPrevalence(prevalence = prevalence[i],
+                                                   age_min_in = age_min_in[i],
+                                                   age_max_in = age_max_in[i],
+                                                   age_min_out = age_min_out[i],
+                                                   age_max_out = age_max_out[i],
+                                                   parameters = parameters,
+                                                   sample_weights = sample_weights))
+    }
+    
+    # See how many of these are NA
+    nmissing <- sum(is.na(ans))
+    
+    # if any of these are NA, give a warning
+    if (nmissing == 1) {
+      warning(paste0('One of the output prevalence estimates is NA,\
+                     probably because some input data was missing'))
+    } else if (nmissing > 1) {
+      warning(paste0(nmissing,
+                     ' of the output prevalence estimates are NA,\
+                     probably because some input data was missing'))
     }
     
     # jump out of the function and return this vector
     return (ans)
-  }
-  
-  # otherwise, do just the one prevalence given
-  
-  # find the optimal value of P_prime
-  P_prime <- invertPF(prevalence = prevalence,
-                      age_min = age_min_in,
-                      age_max = age_max_in,
-                      sample_weights = sample_weights,
-                      parameters = parameters) 
-  
-  # calculate the expected weighted prevalence in the required age range
-  ans <- PFw(P_prime,
-             age_min = age_min_out,
-             age_max = age_max_out,
-             sample_weights = sample_weights,
-             parameters = parameters)
-  
-  return (ans)
+    
+    } else {
+      
+      # otherwise, do just the one prevalence given
+      
+      # if any of the arguments are NA, return NA and issue a warning
+      if (is.na(prevalence) |
+            is.na(age_min_in) |
+            is.na(age_max_in) |
+            is.na(age_min_out) |
+            is.na(age_max_out)) {
+        
+        ans <- NA
+        
+        warning('One of the input arguments was NA,\
+              so the output returned is an NA too')
+        
+      } else {
+        
+        # otherwise do the calculation
+        
+        # find the optimal value of P_prime
+        P_prime <- invertPF(prevalence = prevalence,
+                            age_min = age_min_in,
+                            age_max = age_max_in,
+                            sample_weights = sample_weights,
+                            parameters = parameters) 
+        
+        # calculate the expected weighted prevalence in the required age range
+        ans <- PFw(P_prime,
+                   age_min = age_min_out,
+                   age_max = age_max_out,
+                   sample_weights = sample_weights,
+                   parameters = parameters)
+        
+      }
+      
+      # return the corrected prevalence
+      
+      return (ans)
+      
+    }
   
 }
